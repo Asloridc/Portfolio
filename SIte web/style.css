@@ -1,0 +1,101 @@
+body {
+    font-family: sans-serif;
+    background-color: #222; /* Fond bleu foncé */
+    color: #fff; /* Texte blanc */
+}
+
+header {
+    background-color: #000; /* Fond noir pour l'en-tête */
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+nav a {
+    display: inline-block;
+    margin: 0 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.container {
+    overflow: hidden;
+}
+.carousel {
+    position: relative;
+}
+.carousel-inner {
+    display: flex;
+    overflow: hidden;
+    height: 50vh;
+    flex-wrap: nowrap;
+}
+
+.slide {
+    flex: 0 0 50%;
+    height: 100%;
+    transition: .5s ease-in-out;
+}
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.carousel-controls {
+    position: absolute;
+    z-index: 5;
+    left: 10%;
+    right: 10%;
+    top: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+.carousel-controls button {
+    position: relative;
+    margin-top: 10%;
+    padding: 5px;
+    background-color: aquamarine;
+    opacity: 60%;
+}
+.carousel-controls button:hover {
+    cursor: pointer;
+    border: solid 2px red;
+}
+.carousel-dots {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    right: 50%;
+    bottom: 10%;
+    display: flex;
+    justify-content: center;
+}
+.carousel-dots .dot {
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+}
+.carousel-dots .active {
+    border: 10px solid #761530 !important;
+}
+.carousel-dots .inactive {
+    border: 10px solid #2596be;
+}
+
+
+footer {
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+}
+
+#mail {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+#mail:hover {
+    text-decoration: underline;
+}
