@@ -1,68 +1,764 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votre Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="app.js" async></script>
+    <title>Thomas Des Deserts - Portfolio</title>
+    <style>
+        :root[data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --accent-color: #007bff;
+            --card-bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #ddd;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #4dabf7;
+            --card-bg: #2d2d2d;
+            --header-bg: rgba(26, 26, 26, 0.95);
+            --border-color: #404040;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--header-bg);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+            background-color: var(--bg-secondary);
+        }
+
+        /* Theme Switch */
+        .theme-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-secondary);
+            transition: 0.4s;
+            border-radius: 30px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--accent-color);
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 1rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-primary);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.5s;
+        }
+
+        /* Projets Section */
+        .projects-section {
+            padding: 5rem 1rem;
+            background-color: var(--bg-secondary);
+        }
+
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-info p {
+            color: var(--text-secondary);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 1rem;
+            background-color: var(--bg-primary);
+        }
+
+        .contact-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact form {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            width: 100%;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            width: 50vw;
+            height: auto;
+            margin: auto;
+            display: block;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+
+            /* Style pour la section À propos */
+        .about-section {
+            padding: 6rem 1rem;
+            background-color: var(--bg-primary);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-content {
+            padding-right: 2rem;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .about-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Style pour la section Compétences */
+        .skills-section {
+            padding: 6rem 1rem;
+            background-color: var(--bg-secondary);
+        }
+
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .skill-item span {
+            color: var(--text-primary);
+            flex: 1;
+        }
+        
+        .skill-rating {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .skill-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease;
+        }
+        
+        .skill-dot.filled {
+            background-color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-content {
+                padding-right: 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .modal-content {
+                width: 90vw;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1 style="font-size: 40px;">PORTFOLIO</h1>
-        <h1>Thomas Danguy Des Déserts</h1>
         <nav>
-            <a href="#about">À propos</a>
-            <a href="#mail">Contact</a>
+            <div>
+                <a href="#accueil">Accueil</a>
+                <a href="#APropos">A Propos</a>
+                <a href="#projets">Projets</a>
+                <a href="#skills">Compétences</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
         </nav>
     </header>
 
-    <main>
-        <section id="about">
-            <h2>À propos de moi</h2>
-            <p>Je suis Thomas Danguy Des Déserts, étudiant en IUT Informatique à Bordeaux. Pour le moment ce site propose simplement mes retours d'expériences sur des projets éffectués durant ma première année</p>
-        </section>
-
-    <div class="container">
-        <div class="carousel">
-            <div class="carousel-inner">
-                <div class="slide">
-                    <img src="RETEX/RETEX_S1ODOMO.png"
-                        alt="Image 1">
-                </div>
-                <div class="slide">
-                    <img src="RETEX/RETEX_S1SITEWEB.png"
-                        alt="Image 2">
-                </div>
-                <div class="slide">
-                    <img src="RETEX/RETEX_S1TOWA.png"
-                        alt="Image 3">
-                </div>
-                <div class="slide">
-                    <img src="RETEX/RETEX_S2IHM.png"
-                        alt="Image 4">
-                </div>
-                <div class="slide">
-                    <img src="RETEX/RETEX_S2PIXELWAR.png"
-                        alt="Image 5">
-                </div>
-            </div>
-            <div class="carousel-controls">
-                <button id="prev"><</button>
-                <button id="next">></button>
-            </div>
-            <div class="carousel-dots"></div>
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <h1>Thomas Des Deserts</h1>
+            <p>Etudiant Développeur Web/Application</p>
         </div>
+    </section>
+
+    <section class="about-section" id="APropos">
+        <div class="about-container">
+            <div class="about-content">
+                <h2>À Propos de Moi</h2>
+                <p>Actuellement étudiant en 2ème année de BUT Informatique à l'IUT de Laval, je développe ma passion pour le code et les nouvelles technologies. Mon parcours m'a permis de découvrir différents aspects du développement, de la création d'interfaces utilisateur à la gestion de bases de données.</p>
+                <p>Ce qui me motive particulièrement, c'est de voir mes projets prendre vie et être utilisés. J'aime particulièrement travailler sur l'expérience utilisateur, cherchant toujours à rendre les interfaces intuitives et agréables à utiliser.</p>
+            </div>
+            <div class="about-image">
+                <img src="/chemin/vers/votre/photo.jpg" alt="Portrait de Thomas Des Deserts">
+            </div>
+        </div>
+    </section>
+
+    <section id="projets" class="projects-section">
+        <div class="projects-container">
+            <h2 class="section-title">Mes Projets</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="/RETEX/RETEX_S1ODOMO.png" alt="Projet Odomo" onclick="openModal(this.src)">
+                    <div class="project-info">
+                        <h3>Odomo</h3>
+                        <p>Le premier projet effectué durant mes études, 2023</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="/RETEX/RETEX_S2IHM.png" alt="Projet IHM" onclick="openModal(this.src)">
+                    <div class="project-info">
+                        <h3>Windows Form</h3>
+                        <p>Développement d'une application Windows Form</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="/RETEX/RETEX_S2PIXELWAR.png" alt="Projet Pixel War" onclick="openModal(this.src)">
+                    <div class="project-info">
+                        <h3>Pixel War</h3>
+                        <p>Recréeation du célèbre r/place PixelWar à l'aide d'une API</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="skills-section" id="skills">
+        <div class="skills-container">
+            <h2 class="section-title">Mes Compétences</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>IDE</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span>VSCode</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Netbeans</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>JetBrins IDEs</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Front-end</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span>HTML/CSS</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>JavaScript</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>React</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Back-end</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span>PHP</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot "></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>JavaScript</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot "></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>SQL</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Langages</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span>JAVA</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Python</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>C#</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>C</span>
+                            <div class="skill-rating">
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                                <div class="skill-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <h2 class="section-title">Me Contacter</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">Nom</label>
+                    <input type="text" id="name" placeholder="Votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="votre@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Votre message"></textarea>
+                </div>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </section>
+
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
     </div>
-    </main>
 
-    <footer class="relative">
-        <div class="footer-content">
-            <p>&copy; 2024 Danguy Des Deserts Thomas</p>
-        </div>
-        <div>
-            <a id="mail" href="mailto:thomas.desdeserts@gmail.com" >Contactez-moi</a>
-        </div>
-    </footer>
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.checked = savedTheme === 'dark';
+
+        themeToggle.addEventListener('change', () => {
+            const theme = themeToggle.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        });
+
+        // Modal
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeBtn = document.getElementsByClassName('modal-close')[0];
+
+        function openModal(imgSrc) {
+            modal.style.display = "block";
+            modalImg.src = imgSrc;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = 'auto';
+        }
+
+        closeBtn.onclick = closeModal;
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
