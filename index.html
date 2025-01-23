@@ -465,6 +465,93 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-wrapper {
+            width: 80vw;
+            height: 70vh;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .modal-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .modal-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            background-color: #f0f0f0;
+        }
+
+        .modal-content-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            padding: 2rem;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .modal-context {
+            color: var(--text-secondary);
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--text-primary);
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .modal-wrapper {
+                width: 95vw;
+                height: 80vh;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -499,7 +586,7 @@
                 <p>Ce qui me motive particulièrement, c'est de voir mes projets prendre vie et être utilisés. J'aime particulièrement travailler sur l'expérience utilisateur, cherchant toujours à rendre les interfaces intuitives et agréables à utiliser.</p>
             </div>
             <div class="about-image">
-                <img src="/chemin/vers/votre/photo.jpg" alt="Portrait de Thomas Des Deserts">
+                <img src="Images/Portrait.JPG" alt="Portrait de Thomas Des Deserts">
             </div>
         </div>
     </section>
@@ -509,22 +596,63 @@
             <h2 class="section-title">Mes Projets</h2>
             <div class="projects-grid">
                 <div class="project-card">
-                    <img src="/RETEX/RETEX_S1ODOMO.png" alt="Projet Odomo" onclick="openModal(this.src)">
+                    <img src="/RETEX/RETEX_S1ODOMO.png" 
+                         data-full-image="/RETEX/RETEX_S1ODOMO.png" 
+                         alt="Projet Odomo" 
+                         onclick="openModal(this.src, this.dataset.fullImage, 'Odomo', 'Projet de première année visant à développer une interface de gestion de données météorologiques telles que la pluviométrie, la température et les heures. Projet développé en Java.')">
                     <div class="project-info">
                         <h3>Odomo</h3>
-                        <p>Le premier projet effectué durant mes études, 2023</p>
+                        <p>Le premier projet effectué durant mes études, 2023.</p>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="/RETEX/RETEX_S2IHM.png" alt="Projet IHM" onclick="openModal(this.src)">
+                    <img src="/RETEX/RETEX_S2IHM.png" 
+                         data-full-image="/RETEX/RETEX_S2IHM.png" 
+                         alt="Projet IHM" 
+                         onclick="openModal(this.src, this.dataset.fullImage, 'Windows Form', 'Développement d\'une application Windows Form. Consiste en un jeu tour par tour où le joueur doit construire un deck de cartes pour affronter un adversaire. Les cartes coûtent certaines ressources et ont des effets différents.')">
                     <div class="project-info">
-                        <h3>Windows Form</h3>
-                        <p>Développement d'une application Windows Form</p>
+                        <h3>UniDeckBuildDuel</h3>
+                        <p>Développement d'une application Windows Form.</p>
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="/RETEX/RETEX_S2PIXELWAR.png" alt="Projet Pixel War" onclick="openModal(this.src)">
-                    <div class="project-info">
+                    <img src="/RETEX/RETEX_S2PIXELWAR.png" 
+                         data-full-image="/RETEX/RETEX_S2PIXELWAR.png" 
+                         alt="Projet Pixel War" 
+                         onclick="openModal(this.src, this.dataset.fullImage, 'Pixel War', 'Recréation du célèbre r/place PixelWar en utilisant une API web.')">
+                        <div class="project-info">
+                        <h3>Pixel War</h3>
+                        <p>Recréeation du célèbre r/place PixelWar à l'aide d'une API.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="/RETEX/RETEX_S2CLIMASTAT.png" 
+                         data-full-image="/RETEX/RETEX_S2CLIMASTAT.png" 
+                         alt="Projet ClimaStat" 
+                         onclick="openModal(this.src, this.dataset.fullImage, 'ClimaStat', 'Dans ce projet en équipe, nous avons du créer une application d\u2019analyse de données climatiques en utilisant Visual Studio. Nous avions 10 jours pour la développer.')">
+                        <div class="project-info">
+                        <h3>ClimaStat</h3>
+                        <p>
+                            Développer une application d'analyse de données climatiques en utilisant Visual Studio.
+                        </p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="/RETEX/RETEX_S3ROBOCUP.png" 
+                         data-full-image="/RETEX/RETEX_S3ROBOCUP.png" 
+                         alt="Projet Pixel War" 
+                         onclick="openModal(this.src, this.dataset.fullImage, 'Pixel War', 'Développement d\u2019une application web en Symfony permettant de gérer des compétions de football robotique. Cette application permet de gérer les équipes, les matchs, les scores, les classements, l\u2019authentification et les rencontres.')">
+                        <div class="project-info">
+                        <h3>RoboCup</h3>
+                        <p>Création d'une application Web.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="/RETEX/RETEX_S2PIXELWAR.png" 
+                         data-full-image="/RETEX/RETEX_S2PIXELWAR.png" 
+                         alt="Projet Pixel War" 
+                         onclick="openModal(this.src, this.dataset.fullImage, 'Pixel War', 'Recréation du célèbre r/place PixelWar en utilisant une API web.')">
+                        <div class="project-info">
                         <h3>Pixel War</h3>
                         <p>Recréeation du célèbre r/place PixelWar à l'aide d'une API</p>
                     </div>
@@ -600,8 +728,8 @@
                             <span>React</span>
                             <div class="skill-rating">
                                 <div class="skill-dot filled"></div>
-                                <div class="skill-dot filled"></div>
-                                <div class="skill-dot filled"></div>
+                                <div class="skill-dot"></div>
+                                <div class="skill-dot"></div>
                                 <div class="skill-dot"></div>
                                 <div class="skill-dot"></div>
                             </div>
@@ -613,16 +741,6 @@
                     <div class="skill-list">
                         <div class="skill-item">
                             <span>PHP</span>
-                            <div class="skill-rating">
-                                <div class="skill-dot filled"></div>
-                                <div class="skill-dot filled"></div>
-                                <div class="skill-dot filled"></div>
-                                <div class="skill-dot "></div>
-                                <div class="skill-dot"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span>JavaScript</span>
                             <div class="skill-rating">
                                 <div class="skill-dot filled"></div>
                                 <div class="skill-dot filled"></div>
@@ -695,18 +813,19 @@
     <section id="contact" class="contact">
         <div class="contact-container">
             <h2 class="section-title">Me Contacter</h2>
-            <form>
+            <form name="contact" method="POST" data-netlify="true" action="/success">
+                <input type="hidden" name="form-name" value="contact">
                 <div class="form-group">
                     <label for="name">Nom</label>
-                    <input type="text" id="name" placeholder="Votre nom">
+                    <input type="text" id="name" name="name" placeholder="Votre nom" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="votre@email.com">
+                    <input type="email" id="email" name="email" placeholder="votre@email.com" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" placeholder="Votre message"></textarea>
+                    <textarea id="message" name="message" placeholder="Votre message" required></textarea>
                 </div>
                 <button type="submit">Envoyer</button>
             </form>
@@ -714,9 +833,21 @@
     </section>
 
     <div id="imageModal" class="modal">
-        <span class="modal-close">&times;</span>
-        <img class="modal-content" id="modalImage">
+        <div class="modal-wrapper">
+            <span class="modal-close">&times;</span>
+            <div class="modal-image-container">
+                <img id="modalImage" src="" alt="Project Image">
+            </div>
+            <div class="modal-content-container">
+                <h2 class="modal-title" id="modalTitle">Project Title</h2>
+                <div class="modal-context" id="modalContext">
+                    Project description and additional details will go here.
+                </div>
+            </div>
+        </div>
     </div>
+
+    
 
     <script>
         // Theme Toggle
@@ -736,28 +867,91 @@
         const modalImg = document.getElementById('modalImage');
         const closeBtn = document.getElementsByClassName('modal-close')[0];
 
-        function openModal(imgSrc) {
-            modal.style.display = "block";
-            modalImg.src = imgSrc;
+        function openModal(thumbnailSrc, fullImageSrc, title, context) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContext = document.getElementById('modalContext');
+        
+            // Use full-resolution image if provided, otherwise fall back to thumbnail
+            modalImg.src = fullImageSrc || thumbnailSrc;
+            modalTitle.textContent = title || 'Project Details';
+            modalContext.textContent = context || 'No additional details available.';
+            
+            modal.style.display = "flex";
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
+            const modal = document.getElementById('imageModal');
             modal.style.display = "none";
             document.body.style.overflow = 'auto';
         }
+        
 
-        closeBtn.onclick = closeModal;
-        modal.onclick = function(event) {
-            if (event.target === modal) {
+        // Event listeners
+        document.querySelector('.modal-close').addEventListener('click', closeModal);
+        document.getElementById('imageModal').addEventListener('click', function(event) {
+            if (event.target === this) {
                 closeModal();
             }
-        }
-
+        });
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
+            if (event.key === 'Escape' && document.getElementById('imageModal').style.display === "flex") {
                 closeModal();
             }
+        });
+
+        // Ensure modal is closed by default on page load
+        document.getElementById('imageModal').style.display = "none";
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const submitButton = document.querySelector('button[type="submit"]');
+        
+            // Basic client-side validation
+            if (!name || !email || !message) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+        
+            // Disable submit button and show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Envoi en cours...';
+        
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('message', message);
+        
+            // Send form data
+            fetch('index.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(data.message);
+                    // Reset form
+                    this.reset();
+                } else {
+                    alert(data.message);
+                }
+                submitButton.disabled = false;
+                submitButton.textContent = 'Envoyer';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Une erreur est survenue');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Envoyer';
+            });
         });
     </script>
 </body>
