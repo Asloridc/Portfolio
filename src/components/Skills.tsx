@@ -11,26 +11,26 @@ interface SkillCategory {
 function Skills() {
   const skillCategories: SkillCategory[] = [
     {
-      title: 'IDE',
-      skills: [
-        { name: 'VSCode', level: 4 },
-        { name: 'Netbeans', level: 4 },
-        { name: 'JetBrins IDEs', level: 3 }
-      ]
-    },
-    {
       title: 'Front-end',
       skills: [
         { name: 'HTML/CSS', level: 4 },
         { name: 'JavaScript', level: 4 },
-        { name: 'React', level: 1 }
+        { name: 'React', level: 4 }
       ]
     },
     {
       title: 'Back-end',
       skills: [
-        { name: 'PHP', level: 3 },
+        { name: 'PHP', level: 4 },
         { name: 'SQL', level: 4 }
+      ]
+    },
+    {
+      title: 'DEVOPS',
+      skills: [
+        { name: 'Docker', level: 4 },
+        { name: 'CI/CD', level: 4 },
+        { name: 'Git', level: 4 },
       ]
     },
     {
@@ -41,7 +41,17 @@ function Skills() {
         { name: 'C#', level: 4 },
         { name: 'C', level: 3 }
       ]
-    }
+    },
+    {
+      title: 'IDE',
+      skills: [
+        { name: 'VSCode', level: 4 },
+        { name: 'Netbeans', level: 4 },
+        { name: 'JetBrins IDEs', level: 3 },
+        { name: 'Visual Studio', level: 4 },
+        { name: 'SQL Server', level: 3 }
+      ]
+    },
   ];
 
   const SkillRating = ({ level }: { level: number }) => (
