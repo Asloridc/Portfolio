@@ -411,9 +411,11 @@ button:disabled {
 }
 
 .modal-content-container {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
   padding: 2rem;
+  height: 100%;
+  overflow: hidden;
 }
 
 .modal-title {
@@ -422,12 +424,35 @@ button:disabled {
   margin-bottom: 1rem;
   border-bottom: 2px solid var(--accent-color);
   padding-bottom: 0.5rem;
+  flex-shrink: 0;
 }
 
 .modal-context {
   color: var(--text-secondary);
   overflow-y: auto;
   padding-right: 1rem;
+  line-height: 1.8;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Personnalisation de la scrollbar pour le modal */
+.modal-context::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-context::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.modal-context::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 4px;
+}
+
+.modal-context::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
 
 .modal-close {
