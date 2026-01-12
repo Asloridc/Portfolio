@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import emailjs from '@emailjs/browser';
+import { emailConfig } from '../config/emailConfig';
 
 function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,22 +24,18 @@ function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Si vous voulez utiliser Netlify Forms
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString()
-      });
+      await emailjs.sendForm(
+        emailConfig.serviceID,
+        emailConfig.templateID,
+        form,
+        emailConfig.publicKey
+      );
 
-      if (response.ok) {
-        alert('Message envoyé avec succès!');
-        form.reset();
-      } else {
-        alert('Échec de l\'envoi du message');
-      }
+      alert('Message envoyé avec succès! Je vous répondrai dès que possible.');
+      form.reset();
     } catch (error) {
-      console.error('Error:', error);
-      alert('Une erreur est survenue');
+      console.error('Erreur lors de l\'envoi:', error);
+      alert('Une erreur est survenue lors de l\'envoi du message. Veuillez réessayer.');
     } finally {
       setIsSubmitting(false);
     }
@@ -47,8 +45,7 @@ function Contact() {
     <section id="contact" className="contact">
       <div className="contact-container">
         <h2 className="section-title">Me Contacter</h2>
-        <form name="contact" method="POST" data-netlify="true" onSubmit={handleSubmit}>
-          <input type="hidden" name="form-name" value="contact" />
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Nom</label>
             <input

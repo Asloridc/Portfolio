@@ -204,6 +204,94 @@ input:checked + .slider:before {
   color: var(--text-secondary);
 }
 
+/* Tags de filtrage */
+.tags-filter {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.tags-filter-label {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.tag-button {
+  padding: 0.5rem 1.2rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 2px solid var(--accent-color);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: auto;
+}
+
+.tag-button:hover {
+  background-color: var(--accent-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.tag-button.active {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.clear-filters {
+  padding: 0.5rem 1.5rem;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: auto;
+  transition: all 0.3s ease;
+}
+
+.clear-filters:hover {
+  background-color: var(--border-color);
+  transform: translateY(-2px);
+}
+
+/* Tags sur les cartes de projet */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.project-tag {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.no-projects {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
 /* Contact Section */
 .contact {
   padding: 4rem 1rem;
