@@ -80,6 +80,15 @@ function Projects({ openModal }: ProjectsProps) {
       shortDescription: "Projet de recherche universitaire pour une expérience au sein de l'IUT",
       fullDescription: "Projet réalisé lors d'une expérience menée par un enseignant chercheur de mon IUT. Le but était de récupérer des feed-back des enseignants en scannant des QR codes disposés dans la salle où l'éxperience avait lieu. L'application web est divisée en 3 parties. Une partie professeur, où chaque professeur à son propore QRCode de connexion à scanner afin de donner leur feed-back. Une partie administrateur, où les personnes en charge de l'expérience peuvent voir les statistiques des feed-back en temps réel. Et une partie développeur où l'on peut trouver la documentation de l'API REST utilisée pour l'application.",
       tags: ['Express', 'React', 'TypeScript', 'PostgreSQL', 'Docker','Virtualisation', 'API', 'Web']
+    },
+    {
+      id: 8,
+      thumbnail: '/Images/Bezie/teaser_1.png',
+      fullImage: '/Images/Bezie/teaser_2.png',
+      title: 'Visualisation de graphes',
+      shortDescription: "Application de visualisation de graphes avec edge bundling et algorithme de Prim.",
+      fullDescription: "Application Java de visualisation de graphes utilisant l'edge bundling pour améliorer la lisibilité des diagrammes nœud-lien. Implémentation de l'algorithme de Prim pour extraire un arbre couvrant de poids minimal, puis routage des arêtes le long de cet arbre pour créer des faisceaux visuels cohérents. Le projet inclut une classe Graph complète, un système de chargement depuis fichiers, et a été testé sur des graphes réels comme celui des migrations américaines (1090 sommets, 5635 arêtes). Développé avec tests unitaires, analyse de complexité et diagrammes UML selon les bonnes pratiques orientées objet.",
+      tags: ['Java', 'Graphes', 'Algorithmie', 'NetBeans', 'UML', 'Tests Unitaires']
     }
   ];
 
