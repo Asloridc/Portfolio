@@ -47,7 +47,7 @@ function Skills() {
       skills: [
         { name: 'VSCode', level: 4 },
         { name: 'Netbeans', level: 4 },
-        { name: 'JetBrins IDEs', level: 3 },
+        { name: 'JetBrains IDEs', level: 3 },
         { name: 'Visual Studio', level: 4 },
         { name: 'SQL Server', level: 3 }
       ]
